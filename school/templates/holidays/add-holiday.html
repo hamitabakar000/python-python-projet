@@ -1,0 +1,74 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Add Holiday{% endblock %}
+{% block holiday_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Holiday</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'holiday_list' %}">Holidays</a></li>
+                        <li class="breadcrumb-item active">Add Holiday</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'add_holiday' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12"><h5 class="form-title"><span>Holiday Information</span></h5></div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Holiday Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Type of Holiday</label>
+                                        <select class="form-control" name="holiday_type">
+                                            <option value="Public">Public Holiday</option>
+                                            <option value="School">School Holiday</option>
+                                            <option value="Religious">Religious Holiday</option>
+                                            <option value="National">National Holiday</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Start Date</label>
+                                        <input type="date" class="form-control" name="start_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>End Date</label>
+                                        <input type="date" class="form-control" name="end_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Description (Optional)</label>
+                                        <textarea class="form-control" name="description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

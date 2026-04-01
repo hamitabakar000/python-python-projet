@@ -1,0 +1,54 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Edit Result{% endblock %}
+{% block exam_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Result</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'exam_results' result.exam.id %}">Results</a></li>
+                        <li class="breadcrumb-item active">Edit Result</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'edit_result' result.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12"><h5 class="form-title"><span>Update Marks for {{ result.student.first_name }} {{ result.student.last_name }}</span></h5></div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Marks Obtained (out of {{ result.exam.total_marks }})</label>
+                                        <input type="number" class="form-control" name="marks_obtained" value="{{ result.marks_obtained }}" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <select class="form-control" name="remarks">
+                                            <option value="Pass" {% if result.remarks == 'Pass' %}selected{% endif %}>Pass</option>
+                                            <option value="Fail" {% if result.remarks == 'Fail' %}selected{% endif %}>Fail</option>
+                                            <option value="Absent" {% if result.remarks == 'Absent' %}selected{% endif %}>Absent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

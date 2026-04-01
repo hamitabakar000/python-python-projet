@@ -1,0 +1,73 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Holidays{% endblock %}
+{% block holiday_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Holidays</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Holidays</li>
+                    </ul>
+                </div>
+                <div class="col-auto text-right float-right ml-auto">
+                    {% if user.is_superuser or user.is_admin %}
+                    <a href="{% url 'add_holiday' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Holiday Name</th>
+                                        <th>Type</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        {% if user.is_superuser or user.is_admin %}
+                                        <th class="text-right">Action</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for holiday in holidays %}
+                                    <tr>
+                                        <td>{{ holiday.id }}</td>
+                                        <td>{{ holiday.name }}</td>
+                                        <td>{{ holiday.holiday_type }}</td>
+                                        <td>{{ holiday.start_date|date:"d M Y" }}</td>
+                                        <td>{{ holiday.end_date|date:"d M Y" }}</td>
+                                        {% if user.is_superuser or user.is_admin %}
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <form action="{% url 'delete_holiday' holiday.id %}" method="POST" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm bg-danger-light" onclick="return confirm('Delete this holiday?');">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

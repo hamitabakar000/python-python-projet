@@ -1,0 +1,118 @@
+/* Custom Unique Theme for PreSkool */
+/* Replaces the default orange/yellow (#FFBC53) with a modern Indigo/Purple theme */
+
+:root {
+    --primary: #6f42c1;
+    --primary-hover: #59339d;
+    --sidebar-bg: #1e1e2d;
+    --sidebar-menu: #a2a3b7;
+}
+
+.btn-primary {
+	background-color: var(--primary) !important;
+	border: 1px solid var(--primary) !important;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.active,
+.btn-primary:active,
+.open > .dropdown-toggle.btn-primary {
+	background-color: var(--primary-hover) !important;
+	border: 1px solid var(--primary-hover) !important;
+}
+
+.bg-primary {
+	background-color: var(--primary) !important;
+}
+
+.text-primary,
+.dropdown-menu > li > a.text-primary {
+	color: var(--primary) !important;
+}
+
+.form-control:focus {
+	border-color: var(--primary) !important;
+}
+
+table.table td h2 a:hover {
+	color: var(--primary) !important;
+}
+
+.pagination > .active > a, 
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+	background-color: var(--primary) !important;
+	border-color: var(--primary) !important;
+}
+.pagination > li > a, 
+.pagination > li > span {
+	color: var(--primary) !important;
+}
+.page-link:hover {
+	color: var(--primary) !important;
+}
+.page-item.active .page-link {
+	background-color: var(--primary) !important;
+	border-color: var(--primary) !important;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--primary) !important;
+}
+
+.bg-primary-light {
+    background-color: rgba(111, 66, 193, 0.12) !important;
+    color: var(--primary) !important;
+}
+.bg-success-light {
+    background-color: rgba(40, 167, 69, 0.12) !important;
+    color: #28a745 !important;
+}
+
+/* Sidebar overriding to make it dark and modern instead of light */
+.sidebar {
+    background-color: var(--sidebar-bg);
+}
+.sidebar-menu ul li a {
+    color: var(--sidebar-menu);
+}
+.sidebar-menu ul li a:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+.sidebar-menu ul li.active > a {
+    color: #fff !important;
+    background-color: var(--primary) !important;
+}
+.sidebar-menu ul li > a i {
+    color: var(--sidebar-menu);
+}
+.sidebar-menu ul li.active > a i {
+    color: #fff !important;
+}
+.sidebar-menu ul li.submenu ul {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.sidebar-menu ul li.submenu ul li a:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+}
+.sidebar-menu ul li.submenu ul li.active a {
+    color: var(--primary) !important;
+    background-color: transparent !important;
+}
+.header {
+    background-color: #ffffff;
+    border-bottom: 2px solid var(--primary);
+}
+.header-left {
+    background-color: var(--sidebar-bg);
+}
+.page-header .breadcrumb-item.active {
+    color: var(--primary);
+}
+.logo-small {
+    filter: brightness(0) invert(1);
+}

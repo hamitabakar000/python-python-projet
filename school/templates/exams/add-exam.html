@@ -1,0 +1,85 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Add Exam{% endblock %}
+{% block exam_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Exam</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'exam_list' %}">Exams</a></li>
+                        <li class="breadcrumb-item active">Add Exam</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'add_exam' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12"><h5 class="form-title"><span>Exam Details</span></h5></div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Exam Name</label>
+                                        <input type="text" class="form-control" name="name" placeholder="e.g. Mid-term Exam" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Class Name</label>
+                                        <input type="text" class="form-control" name="class_name" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Subject</label>
+                                        <select class="form-control" name="subject" required>
+                                            <option value="">Select Subject</option>
+                                            {% for subject in subjects %}
+                                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Exam Date</label>
+                                        <input type="date" class="form-control" name="exam_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Start Time</label>
+                                        <input type="time" class="form-control" name="start_time" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>End Time</label>
+                                        <input type="time" class="form-control" name="end_time" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Total Marks</label>
+                                        <input type="number" class="form-control" name="total_marks" value="100" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Timetable{% endblock %}
+{% block timetable_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Timetable</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Timetable</li>
+                    </ul>
+                </div>
+                <div class="col-auto text-right float-right ml-auto">
+                    {% if user.is_superuser or user.is_admin %}
+                    <a href="{% url 'add_timetable' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% for class_name in classes %}
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <h4 class="mb-3">Class: {{ class_name }}</h4>
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Time / Day</th>
+                                        <!-- Real implementation needs complex pivot, but here we list entries -->
+                                        <th>Details</th>
+                                        {% if user.is_superuser or user.is_admin %}
+                                        <th class="text-right">Action</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in timetables %}
+                                        {% if entry.class_name == class_name %}
+                                        <tr>
+                                            <td><strong>{{ entry.day }}</strong> <br> {{ entry.start_time|time:"H:i" }} - {{ entry.end_time|time:"H:i" }}</td>
+                                            <td>
+                                                <p class="mb-0"><strong>{{ entry.subject.name }}</strong></p>
+                                                <p class="text-muted mb-0">{% if entry.teacher %}Teacher: {{ entry.teacher.first_name }} {{ entry.teacher.last_name }}{% endif %} | Room: {{ entry.room }}</p>
+                                            </td>
+                                            {% if user.is_superuser or user.is_admin %}
+                                            <td class="text-right">
+                                                <form action="{% url 'delete_timetable' entry.id %}" method="POST" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm bg-danger-light" onclick="return confirm('Delete this entry?');">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

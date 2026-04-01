@@ -1,0 +1,101 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Search Results{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Search Results</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Search</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h5>Showing results for "{{ query }}"</h5>
+                <hr>
+                
+                {% if students %}
+                <h6 class="mt-4 mb-3">Students found ({{ students|length }})</h6>
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                        <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.student_id }}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'view_student' student.student_id %}">{{ student.first_name }} {{ student.last_name }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ student.student_class }}</td>
+                                        <td>{{ student.mobile_number }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if teachers %}
+                <h6 class="mt-4 mb-3">Teachers found ({{ teachers|length }})</h6>
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Department</th>
+                                        <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for teacher in teachers %}
+                                    <tr>
+                                        <td>{{ teacher.teacher_id }}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'view_teacher' teacher.teacher_id %}">{{ teacher.first_name }} {{ teacher.last_name }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ teacher.department.name }}</td>
+                                        <td>{{ teacher.mobile_number }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if not students and not teachers %}
+                <div class="alert alert-info mt-4">
+                    No matching students or teachers found for "<strong>{{ query }}</strong>".
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

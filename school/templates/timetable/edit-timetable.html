@@ -1,0 +1,97 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Edit Timetable{% endblock %}
+{% block timetable_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Edit Timetable Entry</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'timetable_list' %}">Timetable</a></li>
+                        <li class="breadcrumb-item active">Edit Entry</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'edit_timetable' entry.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12"><h5 class="form-title"><span>Timetable Details</span></h5></div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Class Name</label>
+                                        <input type="text" class="form-control" name="class_name" value="{{ entry.class_name }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Subject</label>
+                                        <select class="form-control" name="subject" required>
+                                            <option value="">Select Subject</option>
+                                            {% for sub in subjects %}
+                                            <option value="{{ sub.id }}" {% if entry.subject.id == sub.id %}selected{% endif %}>{{ sub.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Teacher</label>
+                                        <select class="form-control" name="teacher">
+                                            <option value="">Select Teacher</option>
+                                            {% for teacher in teachers %}
+                                            <option value="{{ teacher.id }}" {% if entry.teacher and entry.teacher.id == teacher.id %}selected{% endif %}>{{ teacher.first_name }} {{ teacher.last_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Day of Week</label>
+                                        <select class="form-control" name="day" required>
+                                            <option value="Monday" {% if entry.day == 'Monday' %}selected{% endif %}>Monday</option>
+                                            <option value="Tuesday" {% if entry.day == 'Tuesday' %}selected{% endif %}>Tuesday</option>
+                                            <option value="Wednesday" {% if entry.day == 'Wednesday' %}selected{% endif %}>Wednesday</option>
+                                            <option value="Thursday" {% if entry.day == 'Thursday' %}selected{% endif %}>Thursday</option>
+                                            <option value="Friday" {% if entry.day == 'Friday' %}selected{% endif %}>Friday</option>
+                                            <option value="Saturday" {% if entry.day == 'Saturday' %}selected{% endif %}>Saturday</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Start Time</label>
+                                        <input type="time" class="form-control" name="start_time" value="{{ entry.start_time|time:'H:i' }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>End Time</label>
+                                        <input type="time" class="form-control" name="end_time" value="{{ entry.end_time|time:'H:i' }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Room No</label>
+                                        <input type="text" class="form-control" name="room" value="{{ entry.room }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

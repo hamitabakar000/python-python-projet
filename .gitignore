@@ -1,0 +1,6 @@
+monenv/
+*.pyc
+__pycache__/
+school/db.sqlite3
+*.pdf
+output.txt

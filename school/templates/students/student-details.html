@@ -1,0 +1,72 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block title %}Student Details{% endblock %}
+{% block student_active %}active{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Student Details</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'student_list' %}">Students</a></li>
+                        <li class="breadcrumb-item active">Student Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="about-info">
+                            <h4>{{ student.first_name }} {{ student.last_name }}</h4>
+                            <div class="media mt-3">
+                                <div class="media-body">
+                                    <ul>
+                                        <li>
+                                            <span class="title-span">Student ID:</span>
+                                            <span class="info-span">{{ student.student_id }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Class:</span>
+                                            <span class="info-span">{{ student.student_class }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Gender:</span>
+                                            <span class="info-span">{{ student.gender }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Mobile:</span>
+                                            <span class="info-span">{{ student.mobile_number }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Father's Name:</span>
+                                            <span class="info-span">{{ student.parent.father_name }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Mother's Name:</span>
+                                            <span class="info-span">{{ student.parent.mother_name }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Join Date:</span>
+                                            <span class="info-span">{{ student.joining_date|date:"d M Y" }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12">
+                                    <a href="{% url 'edit_student' student.student_id %}" class="btn btn-primary">Edit Student</a>
+                                    <a href="{% url 'student_list' %}" class="btn btn-secondary">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
