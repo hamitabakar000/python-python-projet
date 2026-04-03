@@ -20,6 +20,7 @@ def add_exam(request):
     subjects = Subject.objects.all()
     if request.method == 'POST':
         subject_id = request.POST.get('subject')
+        total_marks = request.POST.get('total_marks', 100)
         Exam.objects.create(
             name=request.POST.get('name'),
             exam_date=request.POST.get('exam_date'),
@@ -27,7 +28,7 @@ def add_exam(request):
             class_name=request.POST.get('class_name'),
             start_time=request.POST.get('start_time'),
             end_time=request.POST.get('end_time'),
-            total_marks=request.POST.get('total_marks', 100),
+            total_marks=int(total_marks) if total_marks else 100,
         )
         messages.success(request, 'Exam added successfully!')
         return redirect('exam_list')
@@ -45,7 +46,7 @@ def edit_exam(request, pk):
         exam.class_name = request.POST.get('class_name', exam.class_name)
         exam.start_time = request.POST.get('start_time', exam.start_time)
         exam.end_time = request.POST.get('end_time', exam.end_time)
-        exam.total_marks = request.POST.get('total_marks', exam.total_marks)
+        exam.total_marks = int(request.POST.get('total_marks', exam.total_marks))
         subject_id = request.POST.get('subject')
         if subject_id:
             exam.subject = Subject.objects.get(id=subject_id)
@@ -78,10 +79,11 @@ def add_result(request, exam_id):
     students = Student.objects.all()
     if request.method == 'POST':
         student_id = request.POST.get('student')
+        marks_obtained = request.POST.get('marks_obtained', 0)
         ExamResult.objects.create(
             exam=exam,
             student=Student.objects.get(id=student_id),
-            marks_obtained=request.POST.get('marks_obtained'),
+            marks_obtained=int(marks_obtained) if marks_obtained else 0,
             remarks=request.POST.get('remarks', ''),
         )
         messages.success(request, 'Result added successfully!')
@@ -94,7 +96,7 @@ def add_result(request, exam_id):
 def edit_result(request, pk):
     result = get_object_or_404(ExamResult, pk=pk)
     if request.method == 'POST':
-        result.marks_obtained = request.POST.get('marks_obtained', result.marks_obtained)
+        result.marks_obtained = int(request.POST.get('marks_obtained', result.marks_obtained))
         result.remarks = request.POST.get('remarks', result.remarks)
         result.save()
         messages.success(request, 'Result updated successfully!')

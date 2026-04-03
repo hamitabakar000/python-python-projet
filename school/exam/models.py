@@ -40,24 +40,30 @@ class ExamResult(models.Model):
 
     def save(self, *args, **kwargs):
         # Auto-calculate grade
-        if self.exam.total_marks > 0:
-            percentage = (self.marks_obtained / self.exam.total_marks) * 100
-            if percentage >= 90:
-                self.grade = 'A+'
-            elif percentage >= 80:
-                self.grade = 'A'
-            elif percentage >= 70:
-                self.grade = 'B+'
-            elif percentage >= 60:
-                self.grade = 'B'
-            elif percentage >= 50:
-                self.grade = 'C+'
-            elif percentage >= 40:
-                self.grade = 'C'
-            elif percentage >= 30:
-                self.grade = 'D'
-            else:
-                self.grade = 'F'
+        try:
+            total_marks = int(self.exam.total_marks)
+            marks_obtained = int(self.marks_obtained)
+            if total_marks > 0:
+                percentage = (marks_obtained / total_marks) * 100
+                if percentage >= 90:
+                    self.grade = 'A+'
+                elif percentage >= 80:
+                    self.grade = 'A'
+                elif percentage >= 70:
+                    self.grade = 'B+'
+                elif percentage >= 60:
+                    self.grade = 'B'
+                elif percentage >= 50:
+                    self.grade = 'C+'
+                elif percentage >= 40:
+                    self.grade = 'C'
+                elif percentage >= 30:
+                    self.grade = 'D'
+                else:
+                    self.grade = 'F'
+        except (ValueError, TypeError):
+            # Fallback if marks are not numbers
+            self.grade = 'F'
         super().save(*args, **kwargs)
 
     def __str__(self):

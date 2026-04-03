@@ -1,0 +1,28 @@
+Rapport Word — Projet Django PreSkool
+=====================================
+
+1) Ouvrez un terminal dans le dossier "rapport".
+
+2) Installez les dépendances (une seule fois) :
+   pip install python-docx pillow
+
+3) Générez le document :
+   python generate_rapport.py
+
+4) Le fichier créé s'appelle :
+   Rapport_Projet_Django_Hamit_Abakar_Moussa.docx
+
+Captures d'écran réelles (recommandé pour le rendu)
+---------------------------------------------------
+- Lancez l'application (dossier school) : python manage.py runserver
+- Faites vos captures (Windows : Win+Shift+S ou Impr. écran).
+- Enregistrez-les en remplaçant les fichiers dans le dossier "captures" :
+  01_page_accueil.png
+  02_connexion.png
+  03_dashboard_admin.png
+  04_gestion_etudiants.png
+- Relancez : python generate_rapport.py
+
+Note : le PDF d'énoncé ("Projet mi-guidé Django python.pdf") n'est pas dans le dépôt
+(gitignore). Si votre enseignante exige des sections supplémentaires (résumé, annexes,
+diagrammes UML précis), ajoutez-les dans Word après génération ou modifiez generate_rapport.py.
